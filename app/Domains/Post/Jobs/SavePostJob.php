@@ -2,7 +2,7 @@
 
 namespace App\Domains\Post\Jobs;
 
-use App\Data\Models\Post;
+use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use Lucid\Units\Job;
 

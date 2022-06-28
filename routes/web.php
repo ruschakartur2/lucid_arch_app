@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserPostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,8 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::controller(PostController::class)->group(function () {
-    Route::get('/', 'all_posts');
-    Route::get('/home', 'index')->name('home');
+    Route::get('/', 'index')->name('home');
 });
 
 
