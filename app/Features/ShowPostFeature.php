@@ -2,9 +2,9 @@
 
 namespace App\Features;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Lucid\Units\Feature;
-use App\Data\Models\Post;
 
 class ShowPostFeature extends Feature
 {
@@ -16,7 +16,7 @@ class ShowPostFeature extends Feature
         $this->post = $post;
     }
 
-    public function handle(Request $request)
+    public function handle()
     {
         return view('posts.show')->with('post', $this->post);
     }

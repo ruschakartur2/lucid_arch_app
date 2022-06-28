@@ -17,7 +17,7 @@ class StorePostFeature extends Feature
         ]);
 
         return $this->run(RedirectBackJob::class, [
-            'withMessage' => 'Post created successfully.',
+            'withMessage' => __('messages.post.create.success'),
         ]);
     }
 }

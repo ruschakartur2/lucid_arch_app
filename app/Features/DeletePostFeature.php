@@ -2,23 +2,28 @@
 
 namespace App\Features;
 
-use App\Data\Models\Post;
-use Illuminate\Http\Request;
+use App\Models\Post;
 use Lucid\Units\Feature;
 
 class DeletePostFeature extends Feature
 {
-    public $post;
+    private $post;
 
+    /**
+     * @param Post $post
+     */
     public function __construct(Post $post){
         $this->post = $post;
     }
 
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function handle()
     {
         $this->post->delete();
 
         return redirect()->route('posts.create')
-            ->with('success', 'Post deleted!!!');
+            ->with(__('messages.post.delete.success'));
     }
 }
