@@ -24,7 +24,7 @@
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <h2 class="section-heading">{{ $post->title }}</h2>
-
+                        <h5>Slug: {{$post->slug}}</h5>
                     <a href="#!"><img class="img-fluid" src="{{ asset('img/post-sample-image.jpg') }}" alt="..." /></a>
                     <p>
                         {{ $post->description }}
