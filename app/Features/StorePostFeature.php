@@ -24,9 +24,7 @@ class StorePostFeature extends Feature
             'data' => Arr::except($data, 'img'),
         ]);
 
-        if($request->hasFile('img') && $request->file('img')->isValid()) {
-            $post->addMediaFromRequest('img')->toMediaCollection('img');
-        }
+        $post->addMediaFromRequest('img')->toMediaCollection('img');
 
         return $this->run(RedirectBackJob::class, [
             'withMessage' => __('messages.post.create.success'),
