@@ -5,13 +5,8 @@ namespace App\Domains\Post\Jobs;
 use App\Models\Post;
 use Lucid\Units\Job;
 
-class UpdatePostJob extends Job
+class DeletePostJob extends Job
 {
-    /**
-     * @var array
-     */
-    private array $data;
-
     /**
      * @var Post
      */
@@ -22,9 +17,8 @@ class UpdatePostJob extends Job
      *
      * @return void
      */
-    public function __construct(array $data, Post $post)
+    public function __construct(Post $post)
     {
-        $this->data = $data;
         $this->post = $post;
     }
 
@@ -35,6 +29,6 @@ class UpdatePostJob extends Job
      */
     public function handle(): bool
     {
-        return $this->post->update($this->data);
+        return $this->post->delete();
     }
 }

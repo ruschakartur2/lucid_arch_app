@@ -6,14 +6,18 @@ use Lucid\Units\Job;
 
 class RedirectBackJob extends Job
 {
-    private $withMessage;
+    /**
+     * @var string
+     */
+    private string $withMessage;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($withMessage){
+    public function __construct($withMessage)
+    {
         $this->withMessage = $withMessage;
     }
 

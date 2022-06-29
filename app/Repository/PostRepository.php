@@ -18,9 +18,27 @@ class PostRepository extends Repository
      * @param array $relation
      * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function getPostList(array $relation) {
-        return $this->model
-            ->with($relation)
-            ->get();
+    public function getPostList(array $relation, ?int $userId)
+    {
+        $query = $this->model
+            ->with($relation);
+
+        $query = $this->postFilter($query, $userId);
+
+        return $query->get();
+    }
+
+    /**
+     * @param $query
+     * @param int|null $userId
+     * @return mixed
+     */
+    private function postFilter($query, ?int $userId)
+    {
+        if ($userId) {
+            $query->whereUserId($userId);
+        }
+
+        return $query;
     }
 }

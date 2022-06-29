@@ -3,42 +3,32 @@
 namespace App\Domains\Post\Jobs;
 
 use App\Models\Post;
-use Illuminate\Support\Facades\Auth;
 use Lucid\Units\Job;
 
 class SavePostJob extends Job
 {
-    public $title;
-    public $description;
+    /**
+     * @var array
+     */
+    private array $data;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(
-        $title,
-        $description
-    )
+    public function __construct(array $data)
     {
-        $this->description = $description;
-        $this->title = $title;
+        $this->data = $data;
     }
 
     /**
-     * Execute the job.
-     *
-     * @return void
+     * @return mixed
      */
     public function handle()
     {
-        $attributes = [
-            'title' => $this->title,
-            'description' => $this->description,
-        ];
-
-        $post = new Post($attributes);
-        $user = Auth::user();
+        $post = new Post($this->data);
+        $user = auth()->user();
 
         return $user->posts()->save($post);
     }

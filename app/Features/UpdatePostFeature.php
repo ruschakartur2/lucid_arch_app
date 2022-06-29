@@ -4,7 +4,7 @@ namespace App\Features;
 
 use App\Domains\Http\Jobs\RedirectBackJob;
 use App\Domains\Post\Jobs\UpdatePostJob;
-use App\Domains\Post\Requests\StorePost;
+use App\Domains\Post\Requests\UpdatePost;
 use App\Models\Post;
 use Illuminate\Support\Collection;
 use Lucid\Units\Feature;
@@ -14,23 +14,21 @@ class UpdatePostFeature extends Feature
     /**
      * @var Post
      */
-    private $post;
+    private Post $post;
 
     /**
      * @param Post $post
      */
-    public function __construct(
-        Post $post
-    )
+    public function __construct(Post $post)
     {
         $this->post = $post;
     }
 
     /**
-     * @param StorePost $request
+     * @param UpdatePost $request
      * @return mixed
      */
-    public function handle(StorePost $request)
+    public function handle(UpdatePost $request)
     {
         $data = $request->validated();
 

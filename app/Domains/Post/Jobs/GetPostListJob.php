@@ -10,14 +10,21 @@ class GetPostListJob extends Job
     /**
      * @var array
      */
-    private $relation;
+    private array $relation;
+
+    /**
+     * @var int|null
+     */
+    private ?int $userId;
 
     /**
      * @param array $relation
+     * @param int|null $userId
      */
-    public function __construct(array $relation)
+    public function __construct(array $relation, ?int $userId)
     {
         $this->relation = $relation;
+        $this->userId = $userId;
     }
 
     /**
@@ -26,6 +33,9 @@ class GetPostListJob extends Job
      */
     public function handle(PostRepository $postRepository)
     {
-        return $postRepository->getPostList($this->relation);
+        return $postRepository->getPostList(
+            $this->relation,
+            $this->userId
+        );
     }
 }
