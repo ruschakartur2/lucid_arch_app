@@ -14,7 +14,7 @@ class IndexPostFeature extends Feature
     public function handle()
     {
         /** @var Collection $posts */
-        $posts = $this->run(new GetPostListJob([]));
+        $posts = $this->run(new GetPostListJob([], null));
 
         return view('home', compact('posts'));
     }

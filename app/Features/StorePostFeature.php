@@ -15,9 +15,10 @@ class StorePostFeature extends Feature
      */
     public function handle(StorePost $request)
     {
+        $data = $request->validated();
+
         $this->run(SavePostJob::class, [
-            'title' => $request->input('title'),
-            'description' => $request->input('description'),
+            'data' => $data,
         ]);
 
         return $this->run(RedirectBackJob::class, [

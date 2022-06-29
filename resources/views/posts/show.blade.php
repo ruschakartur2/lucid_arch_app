@@ -29,7 +29,7 @@
                     <p>
                         {{ $post->description }}
                     </p>
-                    @if ($post->user->id == Auth::user()->id)
+                    @if ($post->user->id == auth()->user()->id)
                         <div class="d-flex justify-content-end">
 
                             <div>
