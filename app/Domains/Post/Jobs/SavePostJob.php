@@ -10,14 +10,14 @@ class SavePostJob extends Job
     /**
      * @var array
      */
-    private $data;
+    private array $data;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct(array $data)
     {
         $this->data = $data;
     }

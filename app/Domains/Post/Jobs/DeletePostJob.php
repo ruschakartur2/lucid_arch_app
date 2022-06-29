@@ -7,11 +7,10 @@ use Lucid\Units\Job;
 
 class DeletePostJob extends Job
 {
-
     /**
      * @var Post
      */
-    private $post;
+    private Post $post;
 
     /**
      * Create a new job instance.
@@ -22,7 +21,6 @@ class DeletePostJob extends Job
     {
         $this->post = $post;
     }
-
 
     /**
      * Execute the job.

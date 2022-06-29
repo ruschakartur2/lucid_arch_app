@@ -10,7 +10,7 @@ class EditPostFeature extends Feature
     /**
      * @var Post
      */
-    public $post;
+    public Post $post;
 
     public function __construct(Post $post)
     {

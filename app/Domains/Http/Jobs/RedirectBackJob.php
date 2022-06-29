@@ -3,14 +3,13 @@
 namespace App\Domains\Http\Jobs;
 
 use Lucid\Units\Job;
-use phpDocumentor\Reflection\Types\String_;
 
 class RedirectBackJob extends Job
 {
     /**
-     * @var String_
+     * @var string
      */
-    private $withMessage;
+    private string $withMessage;
 
     /**
      * Create a new job instance.

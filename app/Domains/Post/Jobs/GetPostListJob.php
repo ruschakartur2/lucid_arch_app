@@ -10,12 +10,12 @@ class GetPostListJob extends Job
     /**
      * @var array
      */
-    private $relation;
+    private array $relation;
 
     /**
      * @var int|null
      */
-    private $userId;
+    private ?int $userId;
 
     /**
      * @param array $relation

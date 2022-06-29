@@ -11,7 +11,7 @@ class DeletePostFeature extends Feature
     /**
      * @var Post
      */
-    private $post;
+    private Post $post;
 
     /**
      * @param Post $post
