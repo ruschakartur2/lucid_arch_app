@@ -4,9 +4,10 @@ namespace App\Features;
 
 use App\Domains\Http\Jobs\RedirectBackJob;
 use App\Domains\Post\Jobs\UpdatePostJob;
+use App\Domains\Post\Jobs\UploadPostImageJob;
 use App\Domains\Post\Requests\UpdatePost;
 use App\Models\Post;
-use Illuminate\Support\Collection;
+use Illuminate\Support\Arr;
 use Lucid\Units\Feature;
 
 class UpdatePostFeature extends Feature
@@ -32,9 +33,13 @@ class UpdatePostFeature extends Feature
     {
         $data = $request->validated();
 
-        /** @var Collection $data */
         $this->run(UpdatePostJob::class, [
-            'data' => $data,
+            'data' => Arr::except($data, 'img'),
+            'post' => $this->post
+        ]);
+
+        $this->run(UploadPostImageJob::class, [
+            'image' => $request->file('img'),
             'post' => $this->post
         ]);
 

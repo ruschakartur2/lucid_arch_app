@@ -17,14 +17,13 @@
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
-
                 @guest
                     <h2>Please login!</h2>
                 @else
                     @forelse ($posts as $post)
-
                         <!-- Post preview-->
                         <div class="post-preview">
+                            <img src="{{$post->getFirstMediaUrl('img')}}" width="130px">
                             <a href="{{ route('posts.show', $post->id) }}">
                                 <h2 class="post-title">{{ $post->title }}</h2>
                             </a>
@@ -37,7 +36,6 @@
                         </div>
                         <!-- Divider-->
                         <hr class="my-4" />
-
                     @empty
                         <h4 class="text-center">No Blog post available</h4>
                     @endforelse
