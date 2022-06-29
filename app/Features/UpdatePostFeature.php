@@ -4,6 +4,7 @@ namespace App\Features;
 
 use App\Domains\Http\Jobs\RedirectBackJob;
 use App\Domains\Post\Jobs\UpdatePostJob;
+use App\Domains\Post\Jobs\UploadPostImageJob;
 use App\Domains\Post\Requests\UpdatePost;
 use App\Models\Post;
 use Illuminate\Support\Arr;
@@ -27,8 +28,6 @@ class UpdatePostFeature extends Feature
     /**
      * @param UpdatePost $request
      * @return mixed
-     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist
-     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig
      */
     public function handle(UpdatePost $request)
     {
@@ -39,7 +38,10 @@ class UpdatePostFeature extends Feature
             'post' => $this->post
         ]);
 
-        $this->post->addMediaFromRequest('img')->toMediaCollection('img');
+        $this->run(UploadPostImageJob::class, [
+            'image' => $request->file('img'),
+            'post' => $this->post
+        ]);
 
         return $this->run(RedirectBackJob::class, [
             'withMessage' => __('messages.post.update.success')

@@ -16,6 +16,11 @@ class Post extends Model implements HasMedia
     protected $table = 'posts';
 
     /**
+     * @var string
+     */
+    const MEDIA_COLLECTION_NAMESPACE = 'blogs';
+
+    /**
      * @var string[]
      */
     protected $fillable = [
@@ -27,7 +32,14 @@ class Post extends Model implements HasMedia
      */
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withDefault();
     }
 
+    /**
+     * @return string
+     */
+    public function getPostImageAttribute(): string
+    {
+        return $this->getFirstMediaUrl(self::MEDIA_COLLECTION_NAMESPACE);
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Features;
 
 use App\Domains\Http\Jobs\RedirectBackJob;
 use App\Domains\Post\Jobs\SavePostJob;
+use App\Domains\Post\Jobs\UploadPostImageJob;
 use App\Domains\Post\Requests\StorePost;
 use App\Models\Post;
 use Illuminate\Support\Arr;
@@ -24,7 +25,10 @@ class StorePostFeature extends Feature
             'data' => Arr::except($data, 'img'),
         ]);
 
-        $post->addMediaFromRequest('img')->toMediaCollection('img');
+        $this->run(UploadPostImageJob::class, [
+            'image' => $request->file('img'),
+            'post' => $post
+        ]);
 
         return $this->run(RedirectBackJob::class, [
             'withMessage' => __('messages.post.create.success'),
