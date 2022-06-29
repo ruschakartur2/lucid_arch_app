@@ -61,6 +61,15 @@
                             </span>
                                 @enderror
                                 <div class="mb-2">
+                                    <label>Status</label>
+                                    <select class="form-control" name="status">
+                                        <option value="" disabled>Choose status</option>
+                                        @foreach($status_list as $status)
+                                            <option value="{{$status}}">{{$status}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-2">
                                     <label>Post Image</label>
                                     <input type="file" value="{{$post->getFirstMediaUrl('img')}}" name="img" class="form-control">
                                 </div>
