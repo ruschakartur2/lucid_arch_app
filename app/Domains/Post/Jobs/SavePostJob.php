@@ -5,10 +5,17 @@ namespace App\Domains\Post\Jobs;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use Lucid\Units\Job;
+use phpDocumentor\Reflection\Types\String_;
 
 class SavePostJob extends Job
 {
+    /**
+     * @var String_
+     */
     public $title;
+    /**
+     * @var String_
+     */
     public $description;
 
     /**
@@ -16,19 +23,14 @@ class SavePostJob extends Job
      *
      * @return void
      */
-    public function __construct(
-        $title,
-        $description
-    )
+    public function __construct($title, $description)
     {
         $this->description = $description;
         $this->title = $title;
     }
 
     /**
-     * Execute the job.
-     *
-     * @return void
+     * @return mixed
      */
     public function handle()
     {

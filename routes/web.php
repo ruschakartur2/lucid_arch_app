@@ -22,6 +22,7 @@ Route::controller(PostController::class)->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('posts', PostController::class);
+    Route::resource('user_posts', UserPostController::class)->only([]);
 });
 
 

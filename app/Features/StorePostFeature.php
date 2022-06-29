@@ -9,6 +9,10 @@ use Lucid\Units\Feature;
 
 class StorePostFeature extends Feature
 {
+    /**
+     * @param StorePost $request
+     * @return mixed
+     */
     public function handle(StorePost $request)
     {
         $this->run(SavePostJob::class, [

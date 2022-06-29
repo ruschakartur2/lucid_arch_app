@@ -3,9 +3,13 @@
 namespace App\Domains\Http\Jobs;
 
 use Lucid\Units\Job;
+use phpDocumentor\Reflection\Types\String_;
 
 class RedirectBackJob extends Job
 {
+    /**
+     * @var String_
+     */
     private $withMessage;
 
     /**
@@ -13,7 +17,8 @@ class RedirectBackJob extends Job
      *
      * @return void
      */
-    public function __construct($withMessage){
+    public function __construct($withMessage)
+    {
         $this->withMessage = $withMessage;
     }
 
