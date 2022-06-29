@@ -35,11 +35,13 @@
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <p>Want to share knowledge? Enter the title and content then publish</p>
                     <div class="my-5">
-                        <form action="{{ route('posts.update', $post->id) }}" method="POST">
+                        <form action="{{ route('posts.update', $post->id) }}" enctype="multipart/form-data" method="POST">
                             @csrf
                             @method('PUT')
                             <div class="form-floating">
-                                <input class="form-control @error('title') is-invalid @enderror" name="title" type="text" value="{{ $post->title }}" placeholder="Enter post title..." required />
+                                <input class="form-control @error('title') is-invalid @enderror" name="title"
+                                       type="text" value="{{ $post->title }}" placeholder="Enter post title..."
+                                       required/>
                                 <label for="title">Title</label>
                                 @error('title')
                                 <span class="invalid-feedback" role="alert">
@@ -48,7 +50,8 @@
                                 @enderror
                             </div>
                             <div class="form-floating">
-                            <textarea class="form-control @error('description') is-invalid @enderror" name="description" placeholder="Enter your post here..." style="height: 12rem" required>
+                            <textarea class="form-control @error('description') is-invalid @enderror" name="description"
+                                      placeholder="Enter your post here..." style="height: 12rem" required>
                             {{ $post->description }}
                         </textarea>
                                 <label for="message">Description</label>
@@ -57,9 +60,14 @@
                                 <strong>{{ $message }}</strong>
                             </span>
                                 @enderror
+                                <div class="mb-2">
+                                    <label>Post Image</label>
+                                    <input type="file" value="{{$post->getFirstMediaUrl('img')}}" name="img" class="form-control">
+                                </div>
                             </div>
-                            <br />
-                            <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Publish</button>
+                            <br/>
+                            <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Publish
+                            </button>
                         </form>
                     </div>
                 </div>
