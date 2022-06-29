@@ -2,21 +2,25 @@
 
 namespace App\Features;
 
-use Illuminate\Http\Request;
+use App\Models\Post;
 use Lucid\Units\Feature;
-use App\Data\Models\Post;
 
 class ShowPostFeature extends Feature
 {
-    public $post;
+    /**
+     * @var Post
+     */
+    public Post $post;
 
-    public function __construct(
-        Post $post
-    ){
+    public function __construct(Post $post)
+    {
         $this->post = $post;
     }
 
-    public function handle(Request $request)
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function handle()
     {
         return view('posts.show')->with('post', $this->post);
     }

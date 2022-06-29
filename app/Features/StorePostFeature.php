@@ -9,15 +9,20 @@ use Lucid\Units\Feature;
 
 class StorePostFeature extends Feature
 {
+    /**
+     * @param StorePost $request
+     * @return mixed
+     */
     public function handle(StorePost $request)
     {
+        $data = $request->validated();
+
         $this->run(SavePostJob::class, [
-            'title' => $request->input('title'),
-            'description' => $request->input('description'),
+            'data' => $data,
         ]);
 
         return $this->run(RedirectBackJob::class, [
-            'withMessage' => 'Post created successfully.',
+            'withMessage' => __('messages.post.create.success'),
         ]);
     }
 }

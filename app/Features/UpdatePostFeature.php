@@ -2,34 +2,44 @@
 
 namespace App\Features;
 
-use App\Data\Models\Post;
 use App\Domains\Http\Jobs\RedirectBackJob;
 use App\Domains\Post\Jobs\UpdatePostJob;
-use App\Domains\Post\Requests\StorePost;
-use Illuminate\Http\Request;
+use App\Domains\Post\Requests\UpdatePost;
+use App\Models\Post;
+use Illuminate\Support\Collection;
 use Lucid\Units\Feature;
 
 class UpdatePostFeature extends Feature
 {
-    public $post;
+    /**
+     * @var Post
+     */
+    private Post $post;
 
-    public function __construct(
-        Post $post
-    )
+    /**
+     * @param Post $post
+     */
+    public function __construct(Post $post)
     {
         $this->post = $post;
     }
 
-    public function handle(StorePost $request)
+    /**
+     * @param UpdatePost $request
+     * @return mixed
+     */
+    public function handle(UpdatePost $request)
     {
+        $data = $request->validated();
+
+        /** @var Collection $data */
         $this->run(UpdatePostJob::class, [
-            'post' => $this->post,
-            'title' => $request->input('title'),
-            'description' => $request->input('description')
+            'data' => $data,
+            'post' => $this->post
         ]);
 
         return $this->run(RedirectBackJob::class, [
-            'withMessage' => 'Post updated successfully.'
+            'withMessage' => __('messages.post.update.success')
         ]);
     }
 }
