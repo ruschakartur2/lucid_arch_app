@@ -35,7 +35,7 @@
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <p>Want to share knowledge? Enter the title and content then publish</p>
                     <div class="my-5">
-                        <form action="{{ route('posts.store') }}" method="POST">
+                        <form action="{{ route('posts.store') }}" enctype="multipart/form-data" method="POST">
                             @csrf
                             <div class="form-floating">
                                 <input class="form-control @error('title') is-invalid @enderror" name="title" type="text" placeholder="Enter post title..." required />
@@ -54,6 +54,11 @@
                                 <strong>{{ $message }}</strong>
                             </span>
                                 @enderror
+                                <div class="mb-2">
+                                    <label>Post Image</label>
+                                    <input type="file" name="img" class="form-control">
+                                </div>
+
                             </div>
                             <br />
                             <button class="btn btn-success text-uppercase" type="submit">Publish</button>

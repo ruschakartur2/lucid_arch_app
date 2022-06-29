@@ -12,7 +12,8 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
-        "lucidarch/lucid": "^1.0"
+        "lucidarch/lucid": "^1.0",
+        "spatie/laravel-medialibrary": "^9.6.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
