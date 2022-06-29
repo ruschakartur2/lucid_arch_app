@@ -4,6 +4,7 @@ namespace App\Features;
 
 use App\Domains\Http\Jobs\RedirectBackJob;
 use App\Domains\Post\Jobs\UpdatePostJob;
+use App\Domains\Post\Jobs\UploadPostImageJob;
 use App\Domains\Post\Requests\UpdatePost;
 use App\Models\Post;
 use Illuminate\Support\Arr;
@@ -36,6 +37,11 @@ class UpdatePostFeature extends Feature
 
         $this->run(UpdatePostJob::class, [
             'data' => Arr::except($data, 'img'),
+            'post' => $this->post
+        ]);
+
+        $this->run(UploadPostImageJob::class, [
+            'image' => $request->file('img'),
             'post' => $this->post
         ]);
 

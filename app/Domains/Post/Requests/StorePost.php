@@ -21,11 +21,12 @@ class StorePost extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'title' => ['required', 'string', 'max:225'],
             'description' => ['required', 'string'],
+            'status' => ['required'],
             'img' => ['required', 'mimes:jpg,png,jpeg,gif,svg', 'max:2048']
         ];
     }

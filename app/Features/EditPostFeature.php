@@ -2,6 +2,7 @@
 
 namespace App\Features;
 
+use App\Enums\PostStatusEnum;
 use App\Models\Post;
 use Lucid\Units\Feature;
 
@@ -22,6 +23,8 @@ class EditPostFeature extends Feature
      */
     public function handle()
     {
-        return view('posts.edit')->with('post', $this->post);
+        return view('posts.edit')
+            ->with('post', $this->post)
+            ->with('status_list', PostStatusEnum::getValues());
     }
 }

@@ -4,6 +4,7 @@ namespace App\Features;
 
 use App\Domains\Http\Jobs\RedirectBackJob;
 use App\Domains\Post\Jobs\SavePostJob;
+use App\Domains\Post\Jobs\UploadPostImageJob;
 use App\Domains\Post\Requests\StorePost;
 use App\Models\Post;
 use Illuminate\Support\Arr;
@@ -22,6 +23,12 @@ class StorePostFeature extends Feature
         /** @var Post $post */
         $post = $this->run(SavePostJob::class, [
             'data' => Arr::except($data, 'img'),
+        ]);
+
+        $this->run(UploadPostImageJob::class, [
+            'image' => $request->file('img'),
+            'post' => $post
+
         ]);
 
         if($request->hasFile('img') && $request->file('img')->isValid()) {

@@ -23,7 +23,7 @@
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
-                    <img src="{{$post->getFirstMediaUrl('img')}}" width="130px">
+                    <img src="{{$post->post_image}}" width="130px">
                     <h2 class="section-heading">{{ $post->title }}</h2>
                         <h5>Slug: {{$post->slug}}</h5>
                     <a href="#!"><img class="img-fluid" src="{{ asset('img/post-sample-image.jpg') }}" alt="..." /></a>
