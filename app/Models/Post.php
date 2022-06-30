@@ -38,6 +38,14 @@ class Post extends Model implements HasMedia
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    /**
      * @return string
      */
     public function getPostImageAttribute(): string
