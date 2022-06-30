@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fd846a1b595b6ea4c6e7e2a3ed93e79b",
+    "content-hash": "c20dee99d308d40546c11754e05acf31",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1081,6 +1081,10 @@
             "time": "2020-03-05T20:41:28+00:00"
         },
         {
+<<<<<<< HEAD
+=======
+
+>>>>>>> production
             "name": "intervention/image",
             "version": "2.7.2",
             "source": {
@@ -1219,6 +1223,10 @@
             "time": "2022-06-06T11:26:02+00:00"
         },
         {
+<<<<<<< HEAD
+=======
+
+>>>>>>> production
             "name": "laravel/framework",
             "version": "v8.83.17",
             "source": {
