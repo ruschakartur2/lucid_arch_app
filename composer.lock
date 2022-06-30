@@ -1081,10 +1081,6 @@
             "time": "2020-03-05T20:41:28+00:00"
         },
         {
-<<<<<<< HEAD
-=======
-
->>>>>>> production
             "name": "intervention/image",
             "version": "2.7.2",
             "source": {
@@ -1223,10 +1219,6 @@
             "time": "2022-06-06T11:26:02+00:00"
         },
         {
-<<<<<<< HEAD
-=======
-
->>>>>>> production
             "name": "laravel/framework",
             "version": "v8.83.17",
             "source": {

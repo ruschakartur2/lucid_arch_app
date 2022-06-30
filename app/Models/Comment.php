@@ -4,27 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-use Spatie\MediaLibrary\InteractsWithMedia;
-
 class Comment extends Model
 {
-    use InteractsWithMedia;
-
     /**
      * @var string
      */
     protected $table = 'comments';
 
     /**
-     * @var string
-     */
-    const MEDIA_COLLECTION_NAMESPACE = 'comments';
-
-    /**
      * @var string[]
      */
     protected $fillable = [
         'comment',
+        'user_id'
     ];
 
     /**

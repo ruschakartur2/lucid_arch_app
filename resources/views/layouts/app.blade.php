@@ -59,20 +59,16 @@
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf
                         </form>
-
                     </li>
-
                 @endguest
             </ul>
         </div>
     </div>
 </nav>
-
-
 <main>
     @yield('content')
 </main>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 </body>
 
 </html>

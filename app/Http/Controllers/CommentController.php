@@ -2,27 +2,24 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Features\Comment\DeleteCommentFeature;
 use App\Features\Comment\IndexCommentFeature;
+use App\Features\Comment\StoreCommentFeature;
+use App\Features\Comment\UpdateCommentFeature;
+use App\Models\Comment;
+use App\Models\Post;
 use Lucid\Units\Controller;
-
 
 class CommentController extends Controller
 {
     /**
      * @return mixed
      */
-    public function create()
+    public function store(Post $post)
     {
-        return $this->serve(CreateCommentFeature::class);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function store()
-    {
-        return $this->serve(StoreCommentFeature::class);
+        return $this->serve(StoreCommentFeature::class, [
+            'post' => $post,
+        ]);
     }
 
     /**
@@ -34,35 +31,28 @@ class CommentController extends Controller
     }
 
     /**
+     * @param Post $post
      * @param Comment $comment
      * @return mixed
      */
-    public function edit(Comment $comment)
+    public function update(Post $post, Comment $comment)
     {
-        return $this->serve(EditCommentFeature::class, [
+        return $this->serve(UpdateCommentFeature::class, [
+            'post'    => $post,
             'comment' => $comment
         ]);
     }
 
     /**
+     * @param Post $post
      * @param Comment $comment
      * @return mixed
      */
-    public function update(Comment $comment)
-    {
-        return $this->serve(UpdateCommentFeature::class, [
-            'comment' => $comment,
-        ]);
-    }
-
-    /**
-     * @param Comment $comment
-     * @return mixed
-     */
-    public function destroy(Comment $comment)
+    public function destroy(Post $post, Comment $comment)
     {
         return $this->serve(DeleteCommentFeature::class, [
-            'post' => $comment,
+            'post'    => $post,
+            'comment' => $comment,
         ]);
     }
 }

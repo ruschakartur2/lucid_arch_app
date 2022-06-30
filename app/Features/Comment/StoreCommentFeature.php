@@ -2,37 +2,45 @@
 
 namespace App\Features\Comment;
 
-use App\Domains\Comment\Requests\StoreComment;
+use App\Domains\Comment\Jobs\SaveCommentJob;
+use App\Domains\Comment\Requests\StoreCommentRequest;
 use App\Domains\Http\Jobs\RedirectBackJob;
-use App\Domains\Post\Jobs\SavePostJob;
-use App\Domains\Post\Jobs\UploadPostImageJob;
-use App\Domains\Post\Requests\StorePost;
+use App\Models\Comment;
 use App\Models\Post;
-use Illuminate\Support\Arr;
 use Lucid\Units\Feature;
 
 class StoreCommentFeature extends Feature
 {
     /**
-     * @param StoreComment $request
-     * @return mixed
+     * @var Post
      */
-    public function handle(StoreComment $request)
+    private Post $post;
+
+    /**
+     * @param Post $post
+     */
+    public function __construct(Post $post)
     {
+        $this->post = $post;
+    }
+
+    /**
+     * @param StoreCommentRequest $request
+     * @return void
+     */
+    public function handle(StoreCommentRequest $request)
+    {
+        /** @var array $data */
         $data = $request->validated();
 
-        /** @var Post $post */
-        $post = $this->run(SavePostJob::class, [
-            'data' => Arr::except($data, 'img'),
-        ]);
-
-        $this->run(UploadPostImageJob::class, [
-            'image' => $request->file('img'),
-            'post' => $post
+        /** @var Comment $comment */
+        $this->run(SaveCommentJob::class, [
+            'data' => $data,
+            'post' => $this->post
         ]);
 
         return $this->run(RedirectBackJob::class, [
-            'withMessage' => __('messages.post.create.success'),
+            'withMessage' => __('messages.comment.create.success'),
         ]);
     }
 }
