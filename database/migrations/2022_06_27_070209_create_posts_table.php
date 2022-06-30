@@ -21,8 +21,7 @@ class CreatePostsTable extends Migration
             $table->foreignId('user_id');
             $table->string('title')->unique();
             $table->text('description');
-            $table->enum('status', PostStatusEnum::getValues())
-                ->default(PostStatusEnum::ACTIVE);
+            $table->string('status', 50);
         });
     }
 

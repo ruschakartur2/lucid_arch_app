@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\KeyValueCast;
 use App\Enums\PostStatusEnum;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
@@ -43,7 +44,7 @@ class Post extends Model implements HasMedia
      * @var string[]
      */
     protected $casts = [
-        'status' => PostStatusEnum::class,
+        'status' => KeyValueCast::class.':'.PostStatusEnum::class,
     ];
 
     /**

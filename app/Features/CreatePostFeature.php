@@ -12,7 +12,11 @@ class CreatePostFeature extends Feature
      */
     public function handle()
     {
-        return view('posts.create')
-            ->with('status_list', PostStatusEnum::getValues());
+        /** @var array $statusPost */
+        $statusPost = PostStatusEnum::asArray();
+
+        return view('posts.create', [
+            'status_list' => $statusPost
+        ]);
     }
 }
