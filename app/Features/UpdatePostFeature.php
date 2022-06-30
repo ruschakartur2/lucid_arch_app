@@ -28,6 +28,8 @@ class UpdatePostFeature extends Feature
     /**
      * @param UpdatePost $request
      * @return mixed
+     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist
+     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig
      */
     public function handle(UpdatePost $request)
     {

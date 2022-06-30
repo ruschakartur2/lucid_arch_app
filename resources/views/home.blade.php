@@ -27,6 +27,7 @@
                             <a href="{{ route('posts.show', $post->id) }}">
                                 <h2 class="post-title">{{ $post->title }}</h2>
                             </a>
+                            <h5>{{$post->status}}</h5>
                             <h3 class="post-subtitle">{{ $post->description }}</h3>
                             <p class="post-meta">
                                 Posted by
