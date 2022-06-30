@@ -45,10 +45,6 @@ class UpdatePostFeature extends Feature
             'post' => $this->post
         ]);
 
-        if ($request->hasFile('img') && $request->file('img')->isValid()) {
-            $this->post->addMediaFromRequest('img')->toMediaCollection('img');
-        }
-
         return $this->run(RedirectBackJob::class, [
             'withMessage' => __('messages.post.update.success')
         ]);

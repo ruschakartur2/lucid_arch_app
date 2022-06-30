@@ -23,8 +23,12 @@ class EditPostFeature extends Feature
      */
     public function handle()
     {
-        return view('posts.edit')
-            ->with('post', $this->post)
-            ->with('status_list', PostStatusEnum::getValues());
+        /** @var array $statusPost */
+        $statusPost = PostStatusEnum::asArray();
+
+        return view('posts.edit', [
+            'post' => $this->post,
+            'status_list' => $statusPost
+        ]);
     }
 }

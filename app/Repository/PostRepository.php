@@ -16,7 +16,8 @@ class PostRepository extends Repository
 
     /**
      * @param array $relation
-     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     * @param int|null $userId
+     * @return mixed
      */
     public function getPostList(array $relation, ?int $userId)
     {

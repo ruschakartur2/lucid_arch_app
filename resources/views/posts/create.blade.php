@@ -58,8 +58,8 @@
                                 <label>Status</label>
                                 <select class="form-control" name="status">
                                     <option value="" disabled>Choose status</option>
-                                    @foreach($status_list as $status)
-                                        <option value="{{$status}}">{{$status}}</option>
+                                    @foreach($status_list as $keyStatus => $status)
+                                        <option value="{{$keyStatus}}">{{$status}}</option>
                                     @endforeach
                                 </select>
                                 </div>
