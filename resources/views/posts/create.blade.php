@@ -64,6 +64,7 @@
                                 </select>
                                 </div>
                                 <div class="mb-2">
+
                                     <label>Post Image</label>
                                     <input type="file" name="img" class="form-control">
                                 </div>

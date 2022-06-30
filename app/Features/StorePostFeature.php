@@ -28,7 +28,12 @@ class StorePostFeature extends Feature
         $this->run(UploadPostImageJob::class, [
             'image' => $request->file('img'),
             'post' => $post
+
         ]);
+
+        if($request->hasFile('img') && $request->file('img')->isValid()) {
+            $post->addMediaFromRequest('img')->toMediaCollection('img');
+        }
 
         return $this->run(RedirectBackJob::class, [
             'withMessage' => __('messages.post.create.success'),

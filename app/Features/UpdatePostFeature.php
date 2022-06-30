@@ -28,6 +28,8 @@ class UpdatePostFeature extends Feature
     /**
      * @param UpdatePost $request
      * @return mixed
+     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist
+     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig
      */
     public function handle(UpdatePost $request)
     {
@@ -42,6 +44,10 @@ class UpdatePostFeature extends Feature
             'image' => $request->file('img'),
             'post' => $this->post
         ]);
+
+        if ($request->hasFile('img') && $request->file('img')->isValid()) {
+            $this->post->addMediaFromRequest('img')->toMediaCollection('img');
+        }
 
         return $this->run(RedirectBackJob::class, [
             'withMessage' => __('messages.post.update.success')
