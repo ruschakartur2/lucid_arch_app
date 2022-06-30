@@ -2,6 +2,7 @@
 
 namespace App\Features;
 
+use App\Enums\PostStatusEnum;
 use Lucid\Units\Feature;
 
 class CreatePostFeature extends Feature
@@ -11,6 +12,11 @@ class CreatePostFeature extends Feature
      */
     public function handle()
     {
-        return view('posts.create');
+        /** @var array $statusPost */
+        $statusPost = PostStatusEnum::asArray();
+
+        return view('posts.create', [
+            'status_list' => $statusPost
+        ]);
     }
 }

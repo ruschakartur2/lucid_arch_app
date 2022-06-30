@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Casts\KeyValueCast;
+use App\Enums\PostStatusEnum;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -26,7 +28,8 @@ class Post extends Model implements HasMedia
     protected $fillable = [
         'title',
         'description',
-        'slug'
+        'slug',
+        'status'
     ];
 
     /**
@@ -36,6 +39,13 @@ class Post extends Model implements HasMedia
     {
         return $this->belongsTo(User::class)->withDefault();
     }
+
+    /**
+     * @var string[]
+     */
+    protected $casts = [
+        'status' => KeyValueCast::class.':'.PostStatusEnum::class,
+    ];
 
     /**
      * @return string
