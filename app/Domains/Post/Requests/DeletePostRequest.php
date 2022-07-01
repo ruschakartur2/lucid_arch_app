@@ -4,7 +4,7 @@ namespace App\Domains\Post\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdatePost extends FormRequest
+class DeletePostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,10 @@ class UpdatePost extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        if(auth()->user()->can('delete', $this->post)) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -23,11 +26,6 @@ class UpdatePost extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'title' => ['required', 'string', 'max:225'],
-            'description' => ['required', 'string'],
-            'status' => ['required'],
-            'img' => ['required', 'mimes:jpg,png,jpeg,gif,svg', 'max:2048']
-        ];
+        return [];
     }
 }
