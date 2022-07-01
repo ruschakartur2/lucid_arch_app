@@ -35,7 +35,7 @@
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <p>Want to share knowledge? Enter the title and content then publish</p>
                     <div class="my-5">
-                        <form action="{{ route('posts.update', $post->id) }}" enctype="multipart/form-data" method="PUT">
+                        <form action="{{ route('posts.update', $post->id) }}" enctype="multipart/form-data" method="POST">
                             @csrf
                             @method('PUT')
                             <div class="form-floating">

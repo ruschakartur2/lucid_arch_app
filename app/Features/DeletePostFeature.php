@@ -3,6 +3,7 @@
 namespace App\Features;
 
 use App\Domains\Post\Jobs\DeletePostJob;
+use App\Domains\Post\Requests\DeletePostRequest;
 use App\Models\Post;
 use Lucid\Units\Feature;
 
@@ -22,9 +23,10 @@ class DeletePostFeature extends Feature
     }
 
     /**
+     * @param DeletePostRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function handle(): \Illuminate\Http\RedirectResponse
+    public function handle(DeletePostRequest $request): \Illuminate\Http\RedirectResponse
     {
         $this->run(DeletePostJob::class, [
             'post' => $this->post
