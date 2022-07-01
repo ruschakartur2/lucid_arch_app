@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Post;
 use App\Observers\PostObserver;
+use App\Policies\PostPolicy;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -17,6 +18,13 @@ class AppServiceProvider extends ServiceProvider
     {
         //
     }
+
+    /**
+     * @var array|string[]
+     */
+    protected array $policies = [
+        Post::class => PostPolicy::class
+    ];
 
     /**
      * Bootstrap any application services.
