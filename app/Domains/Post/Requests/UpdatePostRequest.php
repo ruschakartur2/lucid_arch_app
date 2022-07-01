@@ -13,12 +13,11 @@ class UpdatePostRequest extends FormRequest
      */
     public function authorize(): bool
     {
-       if(auth()->user()->can('update', $this->post)) {
+        if (auth()->user()->can('update', $this->post)) {
+            return true;
+        }
 
-           return true;
-       }
-
-       return false;
+        return false;
     }
 
     /**
@@ -29,10 +28,10 @@ class UpdatePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'max:225'],
+            'title'       => ['required', 'string', 'max:225'],
             'description' => ['required', 'string'],
-            'status' => ['required'],
-            'img' => ['required', 'mimes:jpg,png,jpeg,gif,svg', 'max:2048']
+            'status'      => ['required'],
+            'img'         => ['required', 'mimes:jpg,png,jpeg,gif,svg', 'max:2048']
         ];
     }
 }

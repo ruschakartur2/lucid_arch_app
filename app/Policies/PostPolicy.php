@@ -9,11 +9,11 @@ use Illuminate\Auth\Access\Response;
 class PostPolicy
 {
     /**
-     * @param User|null $user
+     * @param User $user
      * @param Post $post
      * @return bool
      */
-    public function update(?User $user, Post $post): bool
+    public function update(User $user, Post $post): bool
     {
         return $user->id === $post->user_id;
     }
