@@ -14,8 +14,10 @@ class DeletePostRequest extends FormRequest
     public function authorize(): bool
     {
         if(auth()->user()->can('delete', $this->post)) {
+
             return true;
         }
+
         return false;
     }
 

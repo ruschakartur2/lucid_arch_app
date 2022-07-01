@@ -14,8 +14,10 @@ class UpdatePostRequest extends FormRequest
     public function authorize(): bool
     {
        if(auth()->user()->can('update', $this->post)) {
+
            return true;
        }
+
        return false;
     }
 
