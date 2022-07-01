@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <header class="masthead" style="background-image: url('img/contact-bg.jpg')">
+    <header class="masthead">
         <div class="container position-relative px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
@@ -35,7 +35,7 @@
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <p>Want to share knowledge? Enter the title and content then publish</p>
                     <div class="my-5">
-                        <form action="{{ route('posts.update', $post->id) }}" enctype="multipart/form-data" method="POST">
+                        <form action="{{ route('posts.update', $post->id) }}" enctype="multipart/form-data" method="PUT">
                             @csrf
                             @method('PUT')
                             <div class="form-floating">
@@ -51,9 +51,7 @@
                             </div>
                             <div class="form-floating">
                             <textarea class="form-control @error('description') is-invalid @enderror" name="description"
-                                      placeholder="Enter your post here..." style="height: 12rem" required>
-                            {{ $post->description }}
-                        </textarea>
+                                      placeholder="Enter your post here..." style="height: 12rem" required>{{ $post->description }}</textarea>
                                 <label for="message">Description</label>
                                 @error('description')
                                 <span class="invalid-feedback" role="alert">
