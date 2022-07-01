@@ -1,11 +1,10 @@
 <?php
 
-use App\Enums\PostStatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePostsTable extends Migration
+class CreateCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,17 +13,18 @@ class CreatePostsTable extends Migration
      */
     public function up()
     {
-        Schema::create('posts', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->id();
+            $table->text('comment');
             $table->timestamps();
-            $table->string('slug')->unique();
-            $table->string('title')->unique();
-            $table->text('description');
-            $table->string('status', 50);
 
             $table->foreignId('user_id')
-                ->references('id')
-                ->on('users');
+                ->constrained('users')
+                ->onDelete('cascade');
+
+            $table->foreignId('post_id')
+                ->constrained('posts')
+                ->onDelete('cascade');
         });
     }
 
@@ -35,6 +35,6 @@ class CreatePostsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('posts');
+        Schema::dropIfExists('comments');
     }
 }
