@@ -48,7 +48,13 @@
                     @endif
                     <div class="mb-3 mt-2">
                         @forelse ($post->comments as $comment)
-                            <h2>{{$comment->comment}}</h2>
+                            @if($comment->created_at->day == now()->day)
+                                <h2 class="green_title">{{$comment->comment}}</h2>
+                            @elseif($comment->created_at->day === \Carbon\Carbon::yesterday()->day)
+                                <h2 class="orange_title">{{$comment->comment}}</h2>
+                            @else
+                                <h2 class="red_title">{{$comment->comment}}</h2>
+                            @endif
                             <b>{{$comment->user->email}}</b>
                             <i>{{$comment->created_at}}</i>
 

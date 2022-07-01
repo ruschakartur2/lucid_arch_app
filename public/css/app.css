@@ -1530,3 +1530,13 @@ select {
   }
 }
 
+
+.green_title {
+    color:green;
+}
+.orange_title {
+    color: orange;
+}
+.red_title {
+    color:red;
+}
