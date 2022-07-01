@@ -5,7 +5,7 @@ namespace App\Features;
 use App\Domains\Http\Jobs\RedirectBackJob;
 use App\Domains\Post\Jobs\UpdatePostJob;
 use App\Domains\Post\Jobs\UploadPostImageJob;
-use App\Domains\Post\Requests\UpdatePost;
+use App\Domains\Post\Requests\UpdatePostRequest;
 use App\Models\Post;
 use Illuminate\Support\Arr;
 use Lucid\Units\Feature;
@@ -26,15 +26,14 @@ class UpdatePostFeature extends Feature
     }
 
     /**
-     * @param UpdatePost $request
+     * @param UpdatePostRequest $request
      * @return mixed
      * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist
      * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig
      */
-    public function handle(UpdatePost $request)
+    public function handle(UpdatePostRequest $request)
     {
         $data = $request->validated();
-
         $this->run(UpdatePostJob::class, [
             'data' => Arr::except($data, 'img'),
             'post' => $this->post
