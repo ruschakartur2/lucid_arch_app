@@ -32,9 +32,6 @@ class UserPostIndexFeature extends Feature
             ),
         );
 
-        return view('home', [
-            'posts'       => $posts,
-            'status_list' => $statusPost,
-        ]);
+        return view('posts.index', compact('posts'));
     }
 }
