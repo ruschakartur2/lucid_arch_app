@@ -11,9 +11,9 @@ class PostPolicy
     /**
      * @param User|null $user
      * @param Post $post
-     * @return Response
+     * @return bool
      */
-    public function update(?User $user, Post $post): Response
+    public function update(?User $user, Post $post): bool
     {
         return $user->id === $post->user_id;
     }
