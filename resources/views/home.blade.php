@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
     <header class="masthead" style="background-image: url('img/home-bg.jpg')">
         <div class="container position-relative px-4 px-lg-5">
@@ -10,6 +9,7 @@
                         <span class="subheading">Recent blog posts</span>
                     </div>
                 </div>
+
             </div>
         </div>
     </header>
@@ -25,7 +25,7 @@
                         <div class="post-preview">
                             <img src="{{$post->getFirstMediaUrl('img')}}" width="130px">
                             <a href="{{ route('posts.show', $post->id) }}">
-                                <h2 class="post-title">{{ $post->title }}</h2>
+                                <h2>{{$post->title}}</h2>
                             </a>
                             <h5>{{$post->status}}</h5>
                             <h3 class="post-subtitle">{{ $post->description }}</h3>
@@ -36,7 +36,7 @@
                             </p>
                         </div>
                         <!-- Divider-->
-                        <hr class="my-4" />
+                        <hr class="my-4"/>
                     @empty
                         <h4 class="text-center">No Blog post available</h4>
                     @endforelse
