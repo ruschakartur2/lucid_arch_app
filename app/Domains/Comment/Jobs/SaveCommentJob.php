@@ -37,6 +37,7 @@ class SaveCommentJob extends Job
     {
         /** @var Comment $comment */
         $comment = new Comment($this->data);
+
         return $this->post->comments()->save($comment);
     }
 }
