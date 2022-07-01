@@ -32,6 +32,7 @@ class UpdatePostRequest extends FormRequest
             'description' => ['required', 'string'],
             'status'      => ['required'],
             'img'         => ['required', 'mimes:jpg,png,jpeg,gif,svg', 'max:2048']
+
         ];
     }
 }
