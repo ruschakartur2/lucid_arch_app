@@ -16,28 +16,38 @@ class PostRepository extends Repository
 
     /**
      * @param array $relation
-     * @param int|null $userId
+     * @param array|null $userId
+     * @param array|null $status
+     * @param bool $isToday
      * @return mixed
      */
-    public function getPostList(array $relation, ?int $userId)
+    public function getPostList(array $relation, ?array $userId, ?array $status, ?bool $isToday)
     {
         $query = $this->model
             ->with($relation);
 
-        $query = $this->postFilter($query, $userId);
+        $query = $this->postFilter($query, $userId, $status, $isToday);
 
         return $query->get();
     }
 
     /**
      * @param $query
-     * @param int|null $userId
+     * @param array|null $userId
+     * @param array|null $status
+     * @param bool|null $isToday
      * @return mixed
      */
-    private function postFilter($query, ?int $userId)
+    private function postFilter($query, ?array $userId, ?array $status, ?bool $isToday)
     {
         if ($userId) {
-            $query->whereUserId($userId);
+            $query->whereIn('user_id', $userId);
+        }
+        if ($status) {
+            $query->whereIn('status', $status);
+        }
+        if ($isToday) {
+            $query->whereDay('created_at', '=', now()->day);
         }
 
         return $query;

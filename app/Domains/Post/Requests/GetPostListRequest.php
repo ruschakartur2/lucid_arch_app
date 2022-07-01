@@ -4,20 +4,16 @@ namespace App\Domains\Post\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DeletePostRequest extends FormRequest
+class GetPostListRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
-     * @return bool
+     * @return integer
      */
     public function authorize(): bool
     {
-        if (auth()->user()->can('delete', $this->post)) {
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     /**
@@ -27,6 +23,10 @@ class DeletePostRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [];
+        return [
+            'userId'  => ['nullable'],
+            'status'  => ['nullable'],
+            'isToday' => ['nullable']
+        ];
     }
 }

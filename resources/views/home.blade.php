@@ -13,13 +13,13 @@
             </div>
         </div>
     </header>
-
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
                 @guest
                     <h2>Please login!</h2>
                 @else
+                    <h2>{{count($posts)}}</h2>
                     @forelse ($posts as $post)
                         <!-- Post preview-->
                         <div class="post-preview">
@@ -31,7 +31,7 @@
                             <h3 class="post-subtitle">{{ $post->description }}</h3>
                             <p class="post-meta">
                                 Posted by
-                                <a href="#!">{{ $post->user->email }}</a>
+                                <a href="#">{{ $post->user->email }}</a>
                                 on {{ $post->created_at }}
                             </p>
                         </div>
@@ -42,6 +42,40 @@
                     @endforelse
                 @endguest
             </div>
+            <div class="col-md-2 col-lg-4 col-xl-3">
+                <h2>Filters</h2>
+                <form action="{{route('posts.index')}}" method="GET">
+                    Statuses:
+                    @foreach($status_list as $keyStatus => $status)
+                        <label for="">{{$status}}</label>
+                        <input type="checkbox"
+                               onChange="this.form.submit()"
+                               {{in_array($keyStatus, request()->get('status', [])) ? 'checked' : ''}}
+                               name="status[]"
+                               value="{{$keyStatus}}">
+                        <br>
+                    @endforeach
+                    <br>
+                    Users:
+                    @foreach($user_list as $user)
+                        <label for="">{{$user->name}}</label>
+                        <input type="checkbox"
+                               onChange="this.form.submit()"
+                               name="userId[]"
+                               {{in_array($user->id, request()->get('userId', [])) ? 'checked' : ''}}
+                               value="{{$user->id}}">
+                        <br>
+                    @endforeach
+                    <label for="isToday">Today posts</label>
+                    <input type="checkbox"
+                           onChange="this.form.submit()"
+                           {{request()->get('isToday') ? 'checked': ''}}
+                           name="isToday"
+                           value="true">
+                    <button class="btn btn-success" type="submit">Confirm</button>
+                </form>
+            </div>
         </div>
+
     </div>
 @endsection
