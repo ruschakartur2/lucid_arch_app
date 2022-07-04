@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Models\Post;
+use Illuminate\Support\Facades\DB;
 
 class PostRepository extends Repository
 {
@@ -35,6 +36,8 @@ class PostRepository extends Repository
         $query = $this->model
             ->with($relation);
 
+        $query = $this->postSelect($query);
+
         $query = $this->postFilter(
             $query,
             $userId,
@@ -49,6 +52,25 @@ class PostRepository extends Repository
         );
 
         return $query->get();
+    }
+
+    /**
+     * @param $query
+     * @return mixed
+     */
+    private function postSelect($query)
+    {
+        $query->select('id', 'title', 'slug', 'status', 'created_at', 'updated_at',
+            DB::raw('
+                       (CASE
+                             WHEN status = "draft" THEN 1
+                             WHEN status = "active" THEN 2
+                             WHEN status = "close" THEN 3
+                       END) as status_sort
+                     ')
+        );
+
+        return $query;
     }
 
     /**
@@ -91,16 +113,11 @@ class PostRepository extends Repository
     )
     {
         if ($byStatus) {
-            $query->orderByRaw('CASE
-            WHEN status = "draft" THEN 1
-            WHEN status = "active" THEN 2
-            WHEN status = "close" THEN 3
-            END '.$byStatus);
+            $query->orderBy('status_sort', $byStatus);
         }
         if ($byDate) {
             $query->orderBy('created_at', $byDate);
         }
-
 
         return $query;
     }

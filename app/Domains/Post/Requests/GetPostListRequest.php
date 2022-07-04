@@ -3,6 +3,7 @@
 namespace App\Domains\Post\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class GetPostListRequest extends FormRequest
 {
@@ -25,8 +26,18 @@ class GetPostListRequest extends FormRequest
             'userId'   => ['nullable'],
             'status'   => ['nullable'],
             'isToday'  => ['nullable'],
-            'byDate'   => ['nullable', 'max:4'],
-            'byStatus' => ['nullable', 'max:4'],
+            'byDate'   => [
+                'nullable', 'max:4', Rule::in([
+                    'asc',
+                    'desc'
+                ])
+            ],
+            'byStatus' => [
+                'nullable', 'max:4', Rule::in([
+                    'asc',
+                    'desc'
+                ])
+            ],
         ];
     }
 }
