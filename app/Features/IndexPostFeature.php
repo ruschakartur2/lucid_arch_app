@@ -30,6 +30,8 @@ class IndexPostFeature extends Feature
                 Arr::get($data, 'userId'),
                 Arr::get($data, 'status'),
                 Arr::get($data, 'isToday'),
+                Arr::get($data, 'byDate', 'desc'),
+                Arr::get($data, 'byStatus', 'asc'),
         ));
 
         return view('home', [
