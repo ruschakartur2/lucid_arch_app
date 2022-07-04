@@ -13,29 +13,45 @@ class GetPostListJob extends Job
     private array $relation;
 
     /**
-     * @var int|null
+     * @var array|null
      */
-    private ?int $userId;
+    private ?array $userId;
 
     /**
-     * @param array $relation
-     * @param int|null $userId
+     * @var array|null
      */
-    public function __construct(array $relation, ?int $userId)
+    private ?array $status;
+
+    /**
+     * @var bool|null
+     */
+    private ?bool $isToday;
+
+    /**
+     * @param array|null $userId
+     * @param array|null $status
+     * @param bool|null $isToday
+     * @param array|null $relation
+     */
+    public function __construct(?array $userId, ?array $status, ?bool $isToday, ?array $relation = [])
     {
         $this->relation = $relation;
         $this->userId = $userId;
+        $this->status = $status;
+        $this->isToday = $isToday;
     }
 
     /**
      * @param PostRepository $postRepository
-     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     * @return mixed
      */
     public function handle(PostRepository $postRepository)
     {
         return $postRepository->getPostList(
             $this->relation,
-            $this->userId
+            $this->userId,
+            $this->status,
+            $this->isToday
         );
     }
 }
