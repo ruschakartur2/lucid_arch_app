@@ -23,21 +23,10 @@ class GetPostListRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'userId'   => ['nullable'],
-            'status'   => ['nullable'],
-            'isToday'  => ['nullable'],
-            'byDate'   => [
-                'nullable', 'max:4', Rule::in([
-                    'asc',
-                    'desc'
-                ])
-            ],
-            'byStatus' => [
-                'nullable', 'max:4', Rule::in([
-                    'asc',
-                    'desc'
-                ])
-            ],
+            'userId'    => ['nullable'],
+            'status'    => ['nullable'],
+            'isToday'   => ['nullable'],
+            'sortField' => ['nullable'],
         ];
     }
 }

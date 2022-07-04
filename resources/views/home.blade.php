@@ -79,20 +79,19 @@
                            {{request()->get('isToday') ? 'checked': ''}}
                            name="isToday"
                            value="true">
-                    <input type="hidden"
-                           name="byDate"
-                           id="sortDateField"
-                           value="{{request()->get('byDate')}}">
-                    <input type="hidden"
-                           name="byStatus"
-                           id="sortStatusField"
-                           value="{{request()->get('byStatus')}}"
-                    >
+
+                    <div>Sorting</div>
+                    <select class="form-control" onChange="this.form.submit()"
+                            name="sortField">
+                        <option value="" disabled>Choose sort</option>
+                    @foreach($sorting_list as $sortKey => $sortValue)
+                        <option {{$sortKey == request()->get('sortField','') ? 'selected' : ''}}
+                                value="{{$sortKey}}"
+                        >{{$sortValue}}
+                        </option>
+                    @endforeach
+                    </select>
                     <br>
-                    <div class="sort-buttons mt-3">
-                    <p class="btn btn-primary" id="sortDateButton">Sort by date</p>
-                    <p class="btn btn-primary ml-3" id="sortStatusButton">Sort by Status</p>
-                    </div>
                 </form>
             </div>
         </div>

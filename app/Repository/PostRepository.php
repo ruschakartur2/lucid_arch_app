@@ -20,8 +20,7 @@ class PostRepository extends Repository
      * @param array|null $userId
      * @param array|null $status
      * @param bool|null $isToday
-     * @param string|null $byDate
-     * @param string|null $byStatus
+     * @param string|null $sortField
      * @return mixed
      */
     public function getPostList(
@@ -29,8 +28,7 @@ class PostRepository extends Repository
         ?array  $userId,
         ?array  $status,
         ?bool   $isToday,
-        ?string $byDate,
-        ?string $byStatus
+        ?string $sortField
     )
     {
         $query = $this->model
@@ -47,8 +45,7 @@ class PostRepository extends Repository
 
         $query = $this->postSorting(
             $query,
-            $byDate,
-            $byStatus
+            $sortField,
         );
 
         return $query->get();
@@ -63,9 +60,9 @@ class PostRepository extends Repository
         $query->select('id', 'title', 'slug', 'status', 'created_at', 'updated_at',
             DB::raw('
                        (CASE
-                             WHEN status = "draft" THEN 1
+                             WHEN status = "draft" THEN 3
                              WHEN status = "active" THEN 2
-                             WHEN status = "close" THEN 3
+                             WHEN status = "close" THEN 1
                        END) as status_sort
                      ')
         );
@@ -108,15 +105,11 @@ class PostRepository extends Repository
      */
     private function postSorting(
         $query,
-        ?string $byDate,
-        ?string $byStatus
+        ?string $sortField
     )
     {
-        if ($byStatus) {
-            $query->orderBy('status_sort', $byStatus);
-        }
-        if ($byDate) {
-            $query->orderBy('created_at', $byDate);
+        if ($sortField) {
+            $query->orderBy($sortField, 'desc');
         }
 
         return $query;

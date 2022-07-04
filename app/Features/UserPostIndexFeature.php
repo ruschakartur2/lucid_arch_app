@@ -4,6 +4,7 @@ namespace App\Features;
 
 use App\Domains\Post\Jobs\GetPostListJob;
 use App\Domains\Post\Requests\GetPostListRequest;
+use App\Enums\PostSortingEnum;
 use App\Enums\PostStatusEnum;
 use App\Models\Post;
 use Illuminate\Support\Arr;
@@ -23,14 +24,16 @@ class UserPostIndexFeature extends Feature
         /** @var array $statusPost */
         $statusPost = PostStatusEnum::asArray();
 
+        /** @var array $sortingPost */
+        $sortingPost = PostSortingEnum::asArray();
+
         /** @var Post $posts */
         $posts = $this->run(
             new GetPostListJob(
                 [auth()->user()->id],
                 Arr::get($data, 'status'),
                 Arr::get($data, 'isToday'),
-                Arr::get($data, 'byDate', 'desc'),
-                Arr::get($data, 'byStatus', 'asc'),
+                Arr::get($data, 'sortField'),
             ),
         );
 
