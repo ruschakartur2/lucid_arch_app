@@ -19,6 +19,12 @@
                 @guest
                     <h2>Please login!</h2>
                 @else
+                    <div class="sort-forms mt-3 mb-3">
+                    <form action="{{route('posts.index')}}">
+                        <input type="hidden" name="byDate" value="{{request()->get('byDate') === 'asc' ? 'desc' : 'asc'}}">
+                        <button class="btn btn-primary" >Sort by date</button>
+                    </form>
+                    </div>
                     <h2>{{count($posts)}}</h2>
                     @forelse ($posts as $post)
                         <!-- Post preview-->

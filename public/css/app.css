@@ -1540,3 +1540,6 @@ select {
 .red_title {
     color:red;
 }
+.sort-forms {
+    display: flex;
+}

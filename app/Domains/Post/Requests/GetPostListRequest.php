@@ -24,9 +24,10 @@ class GetPostListRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'userId'  => ['nullable'],
-            'status'  => ['nullable'],
-            'isToday' => ['nullable']
+            'userId'   => ['nullable'],
+            'status'   => ['nullable'],
+            'isToday'  => ['nullable'],
+            'byDate'   => ['nullable'],
         ];
     }
 }
