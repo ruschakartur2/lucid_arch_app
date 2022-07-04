@@ -7,9 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 class GetPostListRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return integer
+     * @return bool
      */
     public function authorize(): bool
     {
@@ -27,7 +25,8 @@ class GetPostListRequest extends FormRequest
             'userId'   => ['nullable'],
             'status'   => ['nullable'],
             'isToday'  => ['nullable'],
-            'byDate'   => ['nullable'],
+            'byDate'   => ['nullable', 'max:4'],
+            'byStatus' => ['nullable', 'max:4'],
         ];
     }
 }

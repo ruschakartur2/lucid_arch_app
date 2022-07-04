@@ -21,9 +21,10 @@
                 @else
                     <div class="sort-forms mt-3 mb-3">
                     <form action="{{route('posts.index')}}">
-                        <input type="hidden" name="byDate" value="{{request()->get('byDate') === 'asc' ? 'desc' : 'asc'}}">
-                        <button class="btn btn-primary" >Sort by date</button>
+
                     </form>
+
+
                     </div>
                     <h2>{{count($posts)}}</h2>
                     @forelse ($posts as $post)
@@ -50,7 +51,7 @@
             </div>
             <div class="col-md-2 col-lg-4 col-xl-3">
                 <h2>Filters</h2>
-                <form action="{{route('posts.index')}}" method="GET">
+                <form action="{{route('posts.index')}}" method="GET" id="addition-form">
                     Statuses:
                     @foreach($status_list as $keyStatus => $status)
                         <label for="">{{$status}}</label>
@@ -78,10 +79,47 @@
                            {{request()->get('isToday') ? 'checked': ''}}
                            name="isToday"
                            value="true">
-                    <button class="btn btn-success" type="submit">Confirm</button>
+                    <input type="hidden"
+                           name="byDate"
+                           id="sortDateField"
+                           value="{{request()->get('byDate')}}">
+                    <input type="hidden"
+                           name="byStatus"
+                           id="sortStatusField"
+                           value="{{request()->get('byStatus')}}"
+                    >
+                    <br>
+                    <div class="sort-buttons mt-3">
+                    <p class="btn btn-primary" id="sortDateButton">Sort by date</p>
+                    <p class="btn btn-primary ml-3" id="sortStatusButton">Sort by Status</p>
+                    </div>
                 </form>
             </div>
         </div>
-
     </div>
+    <script>
+        let sortDateButton = document.getElementById('sortDateButton');
+        let sortStatusButton = document.getElementById('sortStatusButton');
+        let sortDateField = document.getElementById('sortDateField');
+        let sortStatusField = document.getElementById('sortStatusField');
+
+        let additionForm = document.getElementById('addition-form');
+        console.log(sortDateField);
+        sortDateButton.addEventListener('click', (e) => {
+            if(sortDateField.value === 'asc') {
+                sortDateField.value = 'desc';
+            } else {
+                sortDateField.value = 'asc';
+            }
+            additionForm.submit();
+        } )
+        sortStatusButton.addEventListener('click', (e) => {
+            if(sortStatusField.value === 'asc') {
+                sortStatusField.value = 'desc';
+            } else {
+                sortStatusField.value = 'asc';
+            }
+            additionForm.submit();
+        })
+    </script>
 @endsection

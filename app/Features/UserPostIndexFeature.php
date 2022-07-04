@@ -29,6 +29,8 @@ class UserPostIndexFeature extends Feature
                 [auth()->user()->id],
                 Arr::get($data, 'status'),
                 Arr::get($data, 'isToday'),
+                Arr::get($data, 'byDate', 'desc'),
+                Arr::get($data, 'byStatus', 'asc'),
             ),
         );
 

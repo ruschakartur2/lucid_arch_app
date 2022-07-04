@@ -20,6 +20,7 @@ class PostRepository extends Repository
      * @param array|null $status
      * @param bool|null $isToday
      * @param string|null $byDate
+     * @param string|null $byStatus
      * @return mixed
      */
     public function getPostList(
@@ -27,7 +28,8 @@ class PostRepository extends Repository
         ?array  $userId,
         ?array  $status,
         ?bool   $isToday,
-        ?string $byDate
+        ?string $byDate,
+        ?string $byStatus
     )
     {
         $query = $this->model
@@ -43,6 +45,7 @@ class PostRepository extends Repository
         $query = $this->postSorting(
             $query,
             $byDate,
+            $byStatus
         );
 
         return $query->get();
@@ -78,16 +81,26 @@ class PostRepository extends Repository
     /**
      * @param $query
      * @param string|null $byDate
+     * @param string|null $byStatus
      * @return mixed
      */
     private function postSorting(
         $query,
-        ?string $byDate
+        ?string $byDate,
+        ?string $byStatus
     )
     {
+        if ($byStatus) {
+            $query->orderByRaw('CASE
+            WHEN status = "draft" THEN 1
+            WHEN status = "active" THEN 2
+            WHEN status = "close" THEN 3
+            END '.$byStatus);
+        }
         if ($byDate) {
             $query->orderBy('created_at', $byDate);
         }
+
 
         return $query;
     }
