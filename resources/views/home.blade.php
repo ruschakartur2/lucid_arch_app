@@ -21,7 +21,7 @@
                     </div>
             </div>
             <div class="col-md-2 col-lg-4 col-xl-3">
-                @include('layouts.filter-sort', ['action_route' => 'user_posts.index',
+                @include('layouts.filter-sort', ['action_route' => 'posts.index',
                                                  'with_user_list' => true])
             </div>
         </div>

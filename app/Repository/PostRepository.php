@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Models\Post;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class PostRepository extends Repository
@@ -54,13 +55,18 @@ class PostRepository extends Repository
         return $query->get();
     }
 
+    public function getOldPostList()
+    {
+        return $this->model->where('created_at', '<=', Carbon::now()->subWeek())->get();
+    }
+
     /**
      * @param $query
      * @return mixed
      */
     private function postSelect($query)
     {
-        $query->select('id', 'title', 'slug', 'status','description', 'user_id', 'created_at', 'updated_at',
+        $query->select('id', 'title', 'slug', 'status', 'description', 'user_id', 'created_at', 'updated_at',
             DB::raw('
                        (CASE
                              WHEN status = "draft" THEN 3
