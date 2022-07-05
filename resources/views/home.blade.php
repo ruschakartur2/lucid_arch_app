@@ -19,6 +19,13 @@
                 @guest
                     <h2>Please login!</h2>
                 @else
+                    <div class="sort-forms mt-3 mb-3">
+                    <form action="{{route('posts.index')}}">
+
+                    </form>
+
+
+                    </div>
                     <h2>{{count($posts)}}</h2>
                     @forelse ($posts as $post)
                         <!-- Post preview-->
@@ -43,39 +50,33 @@
                 @endguest
             </div>
             <div class="col-md-2 col-lg-4 col-xl-3">
-                <h2>Filters</h2>
-                <form action="{{route('posts.index')}}" method="GET">
-                    Statuses:
-                    @foreach($status_list as $keyStatus => $status)
-                        <label for="">{{$status}}</label>
-                        <input type="checkbox"
-                               onChange="this.form.submit()"
-                               {{in_array($keyStatus, request()->get('status', [])) ? 'checked' : ''}}
-                               name="status[]"
-                               value="{{$keyStatus}}">
-                        <br>
-                    @endforeach
-                    <br>
-                    Users:
-                    @foreach($user_list as $user)
-                        <label for="">{{$user->name}}</label>
-                        <input type="checkbox"
-                               onChange="this.form.submit()"
-                               name="userId[]"
-                               {{in_array($user->id, request()->get('userId', [])) ? 'checked' : ''}}
-                               value="{{$user->id}}">
-                        <br>
-                    @endforeach
-                    <label for="isToday">Today posts</label>
-                    <input type="checkbox"
-                           onChange="this.form.submit()"
-                           {{request()->get('isToday') ? 'checked': ''}}
-                           name="isToday"
-                           value="true">
-                    <button class="btn btn-success" type="submit">Confirm</button>
-                </form>
+                @include('layouts.filter-sort', ['action_route' => 'posts.index'])
             </div>
         </div>
-
     </div>
+    <script>
+        let sortDateButton = document.getElementById('sortDateButton');
+        let sortStatusButton = document.getElementById('sortStatusButton');
+        let sortDateField = document.getElementById('sortDateField');
+        let sortStatusField = document.getElementById('sortStatusField');
+
+        let additionForm = document.getElementById('addition-form');
+        console.log(sortDateField);
+        sortDateButton.addEventListener('click', (e) => {
+            if(sortDateField.value === 'asc') {
+                sortDateField.value = 'desc';
+            } else {
+                sortDateField.value = 'asc';
+            }
+            additionForm.submit();
+        } )
+        sortStatusButton.addEventListener('click', (e) => {
+            if(sortStatusField.value === 'asc') {
+                sortStatusField.value = 'desc';
+            } else {
+                sortStatusField.value = 'asc';
+            }
+            additionForm.submit();
+        })
+    </script>
 @endsection

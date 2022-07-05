@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Models\Post;
+use Illuminate\Support\Facades\DB;
 
 class PostRepository extends Repository
 {
@@ -18,17 +19,58 @@ class PostRepository extends Repository
      * @param array $relation
      * @param array|null $userId
      * @param array|null $status
-     * @param bool $isToday
+     * @param bool|null $isToday
+     * @param string|null $sortField
+     * @param string|null $sortOrder
      * @return mixed
      */
-    public function getPostList(array $relation, ?array $userId, ?array $status, ?bool $isToday)
+    public function getPostList(
+        array   $relation,
+        ?array  $userId,
+        ?array  $status,
+        ?bool   $isToday,
+        ?string $sortField,
+        ?string $sortOrder
+    )
     {
         $query = $this->model
             ->with($relation);
 
-        $query = $this->postFilter($query, $userId, $status, $isToday);
+        $query = $this->postSelect($query);
+
+        $query = $this->postFilter(
+            $query,
+            $userId,
+            $status,
+            $isToday
+        );
+
+        $query = $this->postSorting(
+            $query,
+            $sortField,
+            $sortOrder,
+        );
 
         return $query->get();
+    }
+
+    /**
+     * @param $query
+     * @return mixed
+     */
+    private function postSelect($query)
+    {
+        $query->select('id', 'title', 'slug', 'status', 'created_at', 'updated_at',
+            DB::raw('
+                       (CASE
+                             WHEN status = "draft" THEN 3
+                             WHEN status = "active" THEN 2
+                             WHEN status = "close" THEN 1
+                       END) as status_sort
+                     ')
+        );
+
+        return $query;
     }
 
     /**
@@ -38,7 +80,12 @@ class PostRepository extends Repository
      * @param bool|null $isToday
      * @return mixed
      */
-    private function postFilter($query, ?array $userId, ?array $status, ?bool $isToday)
+    private function postFilter(
+        $query,
+        ?array $userId,
+        ?array $status,
+        ?bool $isToday
+    )
     {
         if ($userId) {
             $query->whereIn('user_id', $userId);
@@ -48,6 +95,25 @@ class PostRepository extends Repository
         }
         if ($isToday) {
             $query->whereDay('created_at', '=', now()->day);
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param $query
+     * @param string|null $sortField
+     * @param string|null $sortOrder
+     * @return mixed
+     */
+    private function postSorting(
+        $query,
+        ?string $sortField,
+        ?string $sortOrder
+    )
+    {
+        if ($sortField) {
+            $query->orderBy($sortField, $sortOrder);
         }
 
         return $query;

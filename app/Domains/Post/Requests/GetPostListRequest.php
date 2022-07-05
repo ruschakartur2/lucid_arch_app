@@ -2,14 +2,16 @@
 
 namespace App\Domains\Post\Requests;
 
+use App\Enums\PostSortFieldEnum;
+use App\Enums\PostSortOrderEnum;
+use App\Enums\PostStatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class GetPostListRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return integer
+     * @return bool
      */
     public function authorize(): bool
     {
@@ -24,9 +26,13 @@ class GetPostListRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'userId'  => ['nullable'],
-            'status'  => ['nullable'],
-            'isToday' => ['nullable']
+            'userId'    => ['nullable', 'array'],
+            'userId.*'  => ['integer'],
+            'status'    => ['array'],
+            'status.*'  => ['string', Rule::in(PostStatusEnum::getKeys())],
+            'isToday'   => ['nullable', 'boolean'],
+            'sortField' => ['nullable', Rule::in(PostSortFieldEnum::getKeys())],
+            'sortOrder' => ['nullable', Rule::in(PostSortOrderEnum::getKeys())],
         ];
     }
 }
