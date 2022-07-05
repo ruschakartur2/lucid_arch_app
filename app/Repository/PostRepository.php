@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Models\Post;
+use Illuminate\Support\Facades\DB;
 
 class PostRepository extends Repository
 {
@@ -19,8 +20,8 @@ class PostRepository extends Repository
      * @param array|null $userId
      * @param array|null $status
      * @param bool|null $isToday
-     * @param string|null $byDate
-     * @param string|null $byStatus
+     * @param string|null $sortField
+     * @param string|null $sortOrder
      * @return mixed
      */
     public function getPostList(
@@ -28,12 +29,14 @@ class PostRepository extends Repository
         ?array  $userId,
         ?array  $status,
         ?bool   $isToday,
-        ?string $byDate,
-        ?string $byStatus
+        ?string $sortField,
+        ?string $sortOrder
     )
     {
         $query = $this->model
             ->with($relation);
+
+        $query = $this->postSelect($query);
 
         $query = $this->postFilter(
             $query,
@@ -44,11 +47,30 @@ class PostRepository extends Repository
 
         $query = $this->postSorting(
             $query,
-            $byDate,
-            $byStatus
+            $sortField,
+            $sortOrder,
         );
 
         return $query->get();
+    }
+
+    /**
+     * @param $query
+     * @return mixed
+     */
+    private function postSelect($query)
+    {
+        $query->select('id', 'title', 'slug', 'status','description', 'user_id', 'created_at', 'updated_at',
+            DB::raw('
+                       (CASE
+                             WHEN status = "draft" THEN 3
+                             WHEN status = "active" THEN 2
+                             WHEN status = "close" THEN 1
+                       END) as status_sort
+                     ')
+        );
+
+        return $query;
     }
 
     /**
@@ -80,27 +102,19 @@ class PostRepository extends Repository
 
     /**
      * @param $query
-     * @param string|null $byDate
-     * @param string|null $byStatus
+     * @param string|null $sortField
+     * @param string|null $sortOrder
      * @return mixed
      */
     private function postSorting(
         $query,
-        ?string $byDate,
-        ?string $byStatus
+        ?string $sortField,
+        ?string $sortOrder
     )
     {
-        if ($byStatus) {
-            $query->orderByRaw('CASE
-            WHEN status = "draft" THEN 1
-            WHEN status = "active" THEN 2
-            WHEN status = "close" THEN 3
-            END '.$byStatus);
+        if ($sortField) {
+            $query->orderBy($sortField, $sortOrder);
         }
-        if ($byDate) {
-            $query->orderBy('created_at', $byDate);
-        }
-
 
         return $query;
     }

@@ -30,27 +30,27 @@ class GetPostListJob extends Job
     /**
      * @var string|null
      */
-    private ?string $byDate;
+    private ?string $sortField;
 
     /**
      * @var string|null
      */
-    private ?string $byStatus;
+    private ?string $sortOrder;
 
     /**
      * @param array|null $userId
      * @param array|null $status
      * @param bool|null $isToday
-     * @param string|null $byDate
-     * @param string|null $byStatus
+     * @param string|null $sortField
+     * @param string|null $sortOrder
      * @param array|null $relation
      */
     public function __construct(
         ?array $userId,
         ?array $status,
         ?bool $isToday,
-        ?string $byDate,
-        ?string $byStatus,
+        ?string $sortField,
+        ?string $sortOrder,
         ?array $relation = []
     )
     {
@@ -58,8 +58,8 @@ class GetPostListJob extends Job
         $this->userId = $userId;
         $this->status = $status;
         $this->isToday = $isToday;
-        $this->byDate = $byDate;
-        $this->byStatus = $byStatus;
+        $this->sortField = $sortField;
+        $this->sortOrder = $sortOrder;
     }
 
     /**
@@ -73,8 +73,8 @@ class GetPostListJob extends Job
             $this->userId,
             $this->status,
             $this->isToday,
-            $this->byDate,
-            $this->byStatus,
-    );
+            $this->sortField,
+            $this->sortOrder,
+        );
     }
 }
