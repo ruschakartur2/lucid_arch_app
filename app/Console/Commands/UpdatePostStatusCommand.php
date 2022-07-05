@@ -37,6 +37,7 @@ class UpdatePostStatusCommand extends Command
      */
     public function handle()
     {
-        Post::where('created_at', '<=', Carbon::now()->subWeek())->update(['status' => 'draft']);
+        Post::where('created_at', '<=', Carbon::now()->subWeek())
+            ->update(['status' => 'draft']);
     }
 }
