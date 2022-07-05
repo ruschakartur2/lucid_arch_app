@@ -60,7 +60,7 @@ class PostRepository extends Repository
      */
     private function postSelect($query)
     {
-        $query->select('id', 'title', 'slug', 'status', 'created_at', 'updated_at',
+        $query->select('id', 'title', 'slug', 'status','description', 'user_id', 'created_at', 'updated_at',
             DB::raw('
                        (CASE
                              WHEN status = "draft" THEN 3
