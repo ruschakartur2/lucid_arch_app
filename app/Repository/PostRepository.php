@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Models\Post;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class PostRepository extends Repository
@@ -53,11 +52,6 @@ class PostRepository extends Repository
         );
 
         return $query->get();
-    }
-
-    public function getOldPostList()
-    {
-        return $this->model->where('created_at', '<=', Carbon::now()->subWeek())->get();
     }
 
     /**
