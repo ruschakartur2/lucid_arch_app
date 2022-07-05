@@ -1,7 +1,7 @@
 <h2>Filters</h2>
 
 <form action="{{route($action_route)}}" method="GET" id="addition-form">
-    Statuses:
+    <h5>Statuses:</h5>
     @foreach($status_list as $keyStatus => $status)
         <label for="">{{$status}}</label>
         <input type="checkbox"
@@ -11,7 +11,20 @@
                value="{{$keyStatus}}">
         <br>
     @endforeach
+    @if($with_user_list)
+    <h5>Users:</h5>
+    @foreach($user_list as $user)
+        <label for="">{{$user->name}}</label>
+        <input type="checkbox"
+               onChange="this.form.submit()"
+               name="userId[]"
+               {{in_array($user->id, request()->get('userId', [])) ? 'checked' : ''}}
+               value="{{$user->id}}">
+        <br>
+    @endforeach
     <br>
+    @endif
+    <h5>Date</h5>
     <label for="isToday">Today posts</label>
     <input type="checkbox"
            onChange="this.form.submit()"
@@ -19,7 +32,7 @@
            name="isToday"
            value="1">
 
-    <div>Sorting</div>
+    <h5 class="mt-2">Sorting</h5>
     <select class="form-control" onChange="this.form.submit()"
             name="sortField">
         <option value="" disabled>Choose sort</option>
