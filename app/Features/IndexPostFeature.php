@@ -5,7 +5,8 @@ namespace App\Features;
 use App\Domains\Post\Jobs\GetPostListJob;
 use App\Domains\Post\Requests\GetPostListRequest;
 use App\Domains\User\Jobs\GetUserListJob;
-use App\Enums\PostSortingEnum;
+use App\Enums\PostSortFieldEnum;
+use App\Enums\PostSortOrderEnum;
 use App\Enums\PostStatusEnum;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -23,7 +24,10 @@ class IndexPostFeature extends Feature
         $statusPost = PostStatusEnum::asArray();
 
         /** @var array $sortingPost */
-        $sortingPost = PostSortingEnum::asArray();
+        $sortFieldPost = PostSortFieldEnum::asArray();
+
+        /** @var array $sortKeyPost */
+        $sortOrderPost = PostSortOrderEnum::asArray();
 
         /** @var Collection $userList */
         $userList = $this->run(new GetUserListJob([]));
@@ -35,13 +39,16 @@ class IndexPostFeature extends Feature
                 Arr::get($data, 'status'),
                 Arr::get($data, 'isToday'),
                 Arr::get($data, 'sortField'),
-            ));
+                Arr::get($data, 'sortOrder'),
+            )
+        );
 
         return view('home', [
-            'posts'        => $posts,
-            'status_list'  => $statusPost,
-            'user_list'    => $userList,
-            'sorting_list' => $sortingPost,
+            'posts'           => $posts,
+            'status_list'     => $statusPost,
+            'user_list'       => $userList,
+            'sort_field_list' => $sortFieldPost,
+            'sort_order_list'   => $sortOrderPost,
         ]);
     }
 }

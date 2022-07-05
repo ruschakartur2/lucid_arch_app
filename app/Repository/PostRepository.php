@@ -21,6 +21,7 @@ class PostRepository extends Repository
      * @param array|null $status
      * @param bool|null $isToday
      * @param string|null $sortField
+     * @param string|null $sortOrder
      * @return mixed
      */
     public function getPostList(
@@ -28,7 +29,8 @@ class PostRepository extends Repository
         ?array  $userId,
         ?array  $status,
         ?bool   $isToday,
-        ?string $sortField
+        ?string $sortField,
+        ?string $sortOrder
     )
     {
         $query = $this->model
@@ -46,6 +48,7 @@ class PostRepository extends Repository
         $query = $this->postSorting(
             $query,
             $sortField,
+            $sortOrder,
         );
 
         return $query->get();
@@ -99,17 +102,18 @@ class PostRepository extends Repository
 
     /**
      * @param $query
-     * @param string|null $byDate
-     * @param string|null $byStatus
+     * @param string|null $sortField
+     * @param string|null $sortOrder
      * @return mixed
      */
     private function postSorting(
         $query,
-        ?string $sortField
+        ?string $sortField,
+        ?string $sortOrder
     )
     {
         if ($sortField) {
-            $query->orderBy($sortField, 'desc');
+            $query->orderBy($sortField, $sortOrder);
         }
 
         return $query;

@@ -50,49 +50,7 @@
                 @endguest
             </div>
             <div class="col-md-2 col-lg-4 col-xl-3">
-                <h2>Filters</h2>
-                <form action="{{route('posts.index')}}" method="GET" id="addition-form">
-                    Statuses:
-                    @foreach($status_list as $keyStatus => $status)
-                        <label for="">{{$status}}</label>
-                        <input type="checkbox"
-                               onChange="this.form.submit()"
-                               {{in_array($keyStatus, request()->get('status', [])) ? 'checked' : ''}}
-                               name="status[]"
-                               value="{{$keyStatus}}">
-                        <br>
-                    @endforeach
-                    <br>
-                    Users:
-                    @foreach($user_list as $user)
-                        <label for="">{{$user->name}}</label>
-                        <input type="checkbox"
-                               onChange="this.form.submit()"
-                               name="userId[]"
-                               {{in_array($user->id, request()->get('userId', [])) ? 'checked' : ''}}
-                               value="{{$user->id}}">
-                        <br>
-                    @endforeach
-                    <label for="isToday">Today posts</label>
-                    <input type="checkbox"
-                           onChange="this.form.submit()"
-                           {{request()->get('isToday') ? 'checked': ''}}
-                           name="isToday"
-                           value="true">
-
-                    <div>Sorting</div>
-                    <select class="form-control" onChange="this.form.submit()"
-                            name="sortField">
-                        <option value="" disabled>Choose sort</option>
-                    @foreach($sorting_list as $sortKey => $sortValue)
-                        <option {{$sortKey == request()->get('sortField','') ? 'selected' : ''}}
-                                value="{{$sortKey}}"
-                        >{{$sortValue}}
-                        </option>
-                    @endforeach
-                    </select>
-                    <br>
-                </form>
+                @include('layouts.filter-sort', ['action_route' => 'posts.index'])
             </div>
         </div>
     </div>
