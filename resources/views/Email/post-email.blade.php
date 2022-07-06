@@ -9,6 +9,5 @@
             {{ $post->description }}
         </p>
     </div>
-
     {{ config('app.name') }}
 @endcomponent
