@@ -2,7 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Repository\PostRepository;
+use App\Models\Post;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class UpdatePostStatusCommand extends Command
@@ -32,16 +33,11 @@ class UpdatePostStatusCommand extends Command
     }
 
     /**
-     * @param PostRepository $postRepository
      * @return void
      */
-    public function handle(PostRepository $postRepository)
+    public function handle()
     {
-        $posts = $postRepository->getOldPostList();
-
-        foreach ($posts as $post) {
-            $post->status = 'close';
-            $post->save();
-        }
+        Post::where('created_at', '<=', Carbon::now()->subWeek())
+            ->update(['status' => 'draft']);
     }
 }
